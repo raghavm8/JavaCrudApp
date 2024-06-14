@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Users</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container-fluid text-center">
+    <div><h1>Manage Users</h1></div>
+    <div class="m-2"><a class="h3" th:href="@{'/users/create'}">Add User</a></div>
+    <div>
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th>User Id</th>
+                <th>Name</th>
+                <th>Email Id</th>
+                <th>Phone Number</th>
+                <th>Is Enabled</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+                <th:block th:each="user: ${allUsers}">
+                    <tr>
+                        <td>[[${user.id}]]</td>
+                        <td>[[${user.FirstName}]] [[${user.LastName}]]</td>
+                        <td>[[${user.PhoneNumber}]]</td>
+                        <td>[[${user.EmailId}]]</td>
+                        <td>[[${user.IsEnabled}]]</td>
+                        <td>
+                            <a class="h6 mr-2" th:href="@{'/users/update/' + ${user.id}}">Edit</a>
+                            <a class="h6 ml-2" th:href="@{'/users/delete/' + ${user.id}}">Delete</a>
+                        </td>
+                    </tr>
+                </th:block>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
