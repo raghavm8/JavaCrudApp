@@ -30,4 +30,7 @@ public class UserService {
         throw new UserNotFoundException("No user found with ID: " + id);
     }
 
+    public void deleteUser(UUID userId){
+        userRepository.deleteById(userId);
+    }
 }

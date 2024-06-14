@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.util.List;
 import java.util.UUID;
 
@@ -56,6 +55,26 @@ public class UserController {
     public String UpdateUser(User user, RedirectAttributes ra) {
         userService.save(user);
         ra.addFlashAttribute("message", "User Updated Successfully") ;
+        return "redirect:/users";
+    }
+
+    @GetMapping("users/delete/{id}")
+    public String GetDeleteUser(@PathVariable UUID id, Model model, RedirectAttributes ra) {
+        try {
+            User user = userService.getUserById(id);
+            model.addAttribute("user", user);
+        }
+        catch (UserNotFoundException exception){
+            ra.addFlashAttribute("message", exception.getMessage());
+            return "redirect:/users";
+        }
+        return "DeleteUser";
+    }
+
+    @PostMapping("/users/delete")
+    public String DeleteUser(User user, RedirectAttributes ra) {
+        userService.deleteUser(user.getId());
+        ra.addFlashAttribute("message", "User Deleted Successfully") ;
         return "redirect:/users";
     }
 }
